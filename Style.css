@@ -5,9 +5,7 @@ body, html {
     font-family: 'Arial', sans-serif; /* Assuming Arial font */
     background-color: #000; /* Assuming a black background */
 }
-h1{
-    text-align: center;
-}
+
 header {
     text-align: center;
     color: #fff; /* Assuming white text for the header */
@@ -15,7 +13,9 @@ header {
     font-size: 2em; /* Adjust as needed */
     background: #444; /* Assuming a dark grey header background */
 }
-
+h1{
+    text-align: center;
+}
 main {
     display: flex;
     justify-content: center;
