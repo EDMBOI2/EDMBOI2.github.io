@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <title>Pet Store</title>
         <!-- Required meta tags -->
@@ -39,10 +39,7 @@
                         <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#perros">Perros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#gatos">Gatos</a>
+                        <a class="nav-link" href="#productos">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#testimonios">Testimonios</a>
@@ -51,14 +48,17 @@
                         <a class="nav-link" href="#contactos">Contactos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contactos">Peluditos</a>
+                        <a class="nav-link" href="#peluditos">Peluditos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#horario">Horarios</a>
                     </li>
                 </ul>
             </div>    
         </div>
     </nav>
-
-    <section id="banner" class="container-fluid p-0">
+    <!-- seccion inicio -->
+    <section id="inicio" class="container-fluid p-0">
         <div class="banner-img" style="position:relative; background:url('images/slider-image1.jpg') center/cover no-repeat; height:400px;">
             <div class="banner-text" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); text-align:center; color:#000;">
                 <h1>Pet Store</h1>
@@ -127,7 +127,7 @@
             </div>
         </div>
     </section>
-
+    <!-- seccion de testimonios -->
     <section id="testimonios" class="bg-light py-5">
         <div class="container">
             <h2 class="text-center mb-4">Testimonios</h2>
@@ -157,9 +157,9 @@
         </div>
 
     </section>
-
-    <section class="container mt-4">
-        <h2 class="text-center">Productos mas vendidos</h2>
+    <!--seccion productos-->
+    <section id="productos" class="container mt-4">
+        <h2 class="text-center">Productos</h2>
         <br/>
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col d-flex">
@@ -200,8 +200,35 @@
             </div>
         </div>
     </section>
-
-    <footer class="bg-dark text-light text-center">
+    <!--seccion contactos-->
+    <section id="contactos"  class="container mt-4">
+        <h2>Contacto</h2>
+        <p>Estamos aqui para servirle</p>
+        <form action="" method="post">
+            <div class="mb-3">
+                <label for="name">Nombre:</label><br />
+                <input type="text" class="form-control" name="name" placeholder="Nombre" required><br />
+            </div>
+            <div class="mb-3">
+                <label for="email">Correo electronico:</label><br />
+                <input type="email" class="form-control" name="email" placeholder="Correo electronico" required><br/>
+            </div>
+            <div class="mb-3">
+                <label for="massage">Mensaje:</label><br />
+                <textarea name="mensaje" class="form-control" id="message" cols="50" rows="6"></textarea><br />
+            </div>    
+                <input type="submit" class="btn btn-primary" value="Enviar">           
+        </form>
+    </section>
+    <!--seccion horario-->
+    <div id="horario" class="text-center bg-light p-4">
+        <h3 class="mb-4">Horario de atención</h3>
+        <div>
+        <p> <strong>Lunes a viernes</strong></p>
+        <p><strong>8:00 am - 5:00 pm</strong></p>
+        </div>
+    </div>
+    <footer class="bg-dark text-light text-center py-3">
         <p> &copy; Pet Store, todos los derechos reservados.</p> 
         <p>Desarrollado por cesar</p>
     </footer>
@@ -219,3 +246,4 @@
     ></script>
 </body>
 </html>
+
