@@ -203,6 +203,7 @@
 
     <footer class="bg-dark text-light text-center">
         <p> &copy; Pet Store, todos los derechos reservados.</p> 
+        <p>Desarrollado por cesar</p>
     </footer>
 
     <!-- Bootstrap JavaScript Libraries -->
