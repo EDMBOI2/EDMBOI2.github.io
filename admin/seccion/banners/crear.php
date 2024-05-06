@@ -1,4 +1,26 @@
-<?php include("../../templates/header.php"); ?>
+<?php 
+include("../../bd.php");
+print_r($_POST);
+if ($_POST) {
+    $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : "";
+    $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
+    $link = isset($_POST["link"]) ? $_POST["link"] : "";
+
+    // Preparar la sentencia SQL con placeholders correctos sin comillas
+    $sentencia = $conexion->prepare("INSERT INTO `tbl_banners` (`ID`, `titulo`, `descripcion`, `link`) VALUES (NULL, :titulo, :descripcion, :link);");
+
+    // Enlazar parámetros
+    $sentencia->bindParam(":titulo", $titulo);
+    $sentencia->bindParam(":descripcion", $descripcion);
+    $sentencia->bindParam(":link", $link);
+
+    // Ejecutar sentencia
+    $sentencia->execute();
+
+    // Redireccionar
+    header("Location:index.php");
+}
+include("../../templates/header.php"); ?>
 <br/>
 <div class="card">
     <div class="card-header">Banners</div>
