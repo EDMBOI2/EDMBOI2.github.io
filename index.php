@@ -1,3 +1,15 @@
+<?php
+include("admin/bd.php");
+$sentencia=$conexion->prepare("SELECT *FROM tbl_banners ORDER BY id ASC limit 1");
+$sentencia->execute();
+$lista_banners=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+$sentencia=$conexion->prepare("SELECT *FROM tbl_peluditos ORDER BY id DESC");
+$sentencia->execute();
+$lista_peluditos=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+$sentencia=$conexion->prepare("SELECT *FROM tbl_testimonios ORDER BY id DESC limit 2");
+$sentencia->execute();
+$lista_testimonios=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!doctype html>
 <html lang="es">
     <head>
@@ -28,7 +40,7 @@
     
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#"> <i class="fas fa-utensils"></i> Pet Store</a>
+                <a class="navbar-brand" href="#"> <i class="fas fa-utensils"></i>Pet Nourish</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -61,9 +73,13 @@
         <section id="inicio" class="container-fluid p-0">
             <div class="banner-img" style="position:relative; background:url('images/slider-image1.jpg') center/cover no-repeat; height:400px;">
                 <div class="banner-text" style="position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); text-align:center; color:#000;">
-                    <h1>Pet Store</h1>
-                    <p>Tienda de comida para mascotas</p>
-                    <a href="#menu" class="btn btn-primary">Ver menú</a>
+                    <?php
+                    foreach($lista_banners as $banner){
+                    ?>
+                    <h1><?php echo $banner['titulo'];?></h1>
+                    <p><?php echo $banner['descripcion'];?></p>
+                    <a href="<?php echo $banner['link'];?>" class="btn btn-primary">Ver productos</a>
+                    <?php } ?>
                 </div>
             </div>
         </section>
@@ -80,51 +96,35 @@
         <section id="peluditos" class="container mt-4 text-center">
             <h2>Nuestros peluditos</h2>
             <div class="row">
+                <?php
+                    foreach($lista_peluditos as $peludito){
+
+                   
+                ?>
                 <!-- Peludito 1 -->
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="images/peluditos/Apolo.jpg" class="card-img-top" alt="Peludito 1"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Peludito 1</h5>
-                            <p class="card-text">Él es Venus</p>
-                            <div class="social-icons mt-3">
-                                <a href="#" class="text-dark me-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <img src="images/peluditos/<?php echo $peludito["foto"]?>" 
+                        class="card-img-top" 
+                        alt="Peludito 3"/>
                 <!-- Peludito 2 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="images/peluditos/Apolo.jpg" class="card-img-top" alt="Peludito 2"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Peludito 2</h5>
-                            <p class="card-text">Él es Apolo</p>
-                            <div class="social-icons mt-3">
-                                <a href="#" class="text-dark me-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- Peludito 3 -->
                 <div class="col-md-4">
                     <div class="card">
                         <img src="images/peluditos/Apolo.jpg" class="card-img-top" alt="Peludito 3"/>
                         <div class="card-body">
-                            <h5 class="card-title">Peludito 3</h5>
-                            <p class="card-text">Él es Gasper</p>
+                            <h5 class="card-title"><?php echo $peludito["titulo"]?></h5>
+                            <p class="card-text"><?php echo $peludito["descripcion"]?></p>
                             <div class="social-icons mt-3">
-                                <a href="#" class="text-dark me-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="text-dark me-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="<?php echo $peludito["linkfacebook"]?>" class="text-dark me-2" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="<?php echo $peludito["linktwitter"]?>" class="text-dark me-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="<?php echo $peludito["linkinstagram"]?>" class="text-dark me-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </section>
         <!-- seccion de testimonios -->
@@ -132,26 +132,21 @@
             <div class="container">
                 <h2 class="text-center mb-4">Testimonios</h2>
                 <div class="row">
+                    <?php foreach ($lista_testimonios as $testimonio) { ?>
                     <div class="col-md-6 d-flex">
                         <div class="card mb-4 w-100">
                             <div class="card-body">
-                                <p class="card-text">Excelentes productos</p>
+                                <p class="card-text">
+                                    <?php echo $testimonio["opinion"]; ?>
+                                </p>
                             </div>
                             <div class="card-footer text-muted">
-                                Edward
+                                <?php echo $testimonio["nombre"]; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 d-flex">
-                        <div class="card mb-4 w-100">
-                            <div class="card-body">
-                                <p class="card-text">Excelentes productos</p>
-                            </div>
-                            <div class="card-footer text-muted">
-                                Tania
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
+
                 </div>
 
             </div>
