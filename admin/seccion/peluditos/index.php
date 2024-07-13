@@ -1,5 +1,24 @@
 <?php
 include("../../bd.php");
+if(isset($_GET['txtID'])){
+    $txtID = isset($_GET["txtID"]) ? $_GET["txtID"] : "";
+    $sentencia=$conexion->prepare("SELECT * FROM `tbl_peluditos` WHERE ID=:id");
+    $sentencia->bindParam(":id",$txtID);
+    $sentencia->execute();
+    $registro_foto = $sentencia->fetch(PDO::FETCH_LAZY);
+    
+    if (isset($registro_foto['foto'])) {
+        // Check if the file exists in the specified directory
+        if (file_exists("../../../images/peluditos/" . $registro_foto['foto'])) {
+            // If the file exists, delete it
+            unlink("../../../images/peluditos/" . $registro_foto['foto']);
+        }
+    }
+    $sentencia=$conexion->prepare("DELETE FROM `tbl_peluditos` WHERE ID=:id");
+    $sentencia->bindParam(":id",$txtID);
+    $sentencia->execute();
+    header("location:index.php");
+    }
 $sentencia=$conexion->prepare("SELECT * FROM `tbl_peluditos`");
 $sentencia->execute();
 $lista_peluditos= $sentencia->fetchAll(PDO::FETCH_ASSOC); 
@@ -32,8 +51,8 @@ include("../../templates/header.php");
                             <td scope="row"><?php echo $value['ID']; ?></td>
                             <td><?php echo $value['titulo']; ?></td>
                             <td>
-                                <img src="../../../images/peluditos/<?php echo $value['foto']; ?>" whidyh="50" alt="" srcrset=""></td>
-                                
+                                <img src="../../../images/peluditos/<?php echo $value['foto']; ?>" whidyh="50" alt="" srcrset="">
+                            </td>                                
                             <td><?php echo $value['descripcion']; ?></td>
                             <td><?php echo $value['linkfacebook']; ?><br/>
                                 <?php echo $value['linkinstagram']; ?><br/>

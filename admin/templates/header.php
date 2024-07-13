@@ -1,3 +1,6 @@
+<?php
+$url_base = "http://localhost/pet-store/admin/";
+?>
 <!doctype html>
 <html lang="es">
     <head>
@@ -23,15 +26,16 @@
             <nav class="navbar navbar-expand navbar-light bg-light">
                 <div class="nav navbar-nav">
                     <a class="nav-item nav-link active" href="#" aria-current="page">Administrador <span class="visually-hidden">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">Banners</a>
-                    <a class="nav-item nav-link" href="#">Colaboradores</a>
-                    <a class="nav-item nav-link" href="#">Testimonios</a>
-                    <a class="nav-item nav-link" href="#">Productos</a>
-                    <a class="nav-item nav-link" href="#">Comentarios</a>
-                    <a class="nav-item nav-link" href="#">Usuarios</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/banners/">Banners</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/peluditos/">Peluditos</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/testimonios/">Testimonios</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/productos/">Productos</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/comentarios/">Comentarios</a>
+                    <a class="nav-item nav-link" href="<?php echo $url_base;?>seccion/usuarios/">Usuarios</a>
                     <a class="nav-item nav-link" href="#">Cerrar sesión</a>
                 </div>
             </nav>
             
         </header>
     <main>
+<section class="container">

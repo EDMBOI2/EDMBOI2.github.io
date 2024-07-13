@@ -1,36 +1,56 @@
 <?php
 include("../../bd.php");
-if ($_POST) {
-    $titulo = (isset($_POST['titulo'])) ? $_POST['titulo'] : "";
-    $descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : "";
-    $linkfacebook = (isset($_POST['linkfacebook'])) ? $_POST['linkfacebook'] : "";
-    $linkinstagram = (isset($_POST['linkinstagram'])) ? $_POST['linkinstagram'] : "";
-    $linktwitter = (isset($_POST['linktwitter'])) ? $_POST['linktwitter'] : ""; // Corrected the variable name here
-    $sentencia = $conexion->prepare("
-    INSERT INTO `tbl_peluditos` (`titulo`, `descripcion`, `linkfacebook`, `linkinstagram`, `linktwitter`, `foto`) 
-    VALUES (:titulo, :descripcion, :linkfacebook, :linkinstagram, :linktwitter, :foto);"); // Removed quotes around placeholders and ID field as it's likely auto-incrementing
 
-    // Check if the foto exists in the FILES array and handle accordingly
-    $nombre_foto = ""; // Default blank if no foto
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-        $foto = $_FILES['foto']['name'];
+if ($_POST){
+    // Clean and validate input data
+    $titulo = (isset($_POST['titulo']))?$_POST['titulo']:"";
+    $descripcion = (isset($_POST['descripcion']))?$_POST['descripcion']:"";
+    $linkfacebook = (isset($_POST['linkfacebook']))?$_POST['linkfacebook']:"";
+    $linkinstagram = (isset($_POST['linkinstagram']))?$_POST['linkinstagram']:"";
+    $linktwitter = (isset($_POST['linktwitter']))?$_POST['linktwitter']:"";
+
+    // Initialize variables for foto
+    
+
+    // Prepare the SQL statement
+    $sentencia = $conexion->prepare("
+        INSERT INTO `tbl_peluditos` (`titulo`, `descripcion`, `linkfacebook`, `linkinstagram`, `linktwitter`, `foto`) 
+        VALUES (:titulo, :descripcion, :linkfacebook, :linkinstagram, :linktwitter, :foto);
+    ");
+    $nombre_foto = "";
+
+    // Check if the 'foto' file is uploaded successfully
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $foto_name = $_FILES['foto']['name'];
         $fecha_foto = new DateTime();
-        $nombre_foto = $fecha_foto->getTimestamp() . "_" . $foto;
+        $nombre_foto = $fecha_foto->getTimestamp() . "_" . basename($foto_name);  // Using basename() to prevent path traversal vulnerabilities
         $tmp_foto = $_FILES['foto']['tmp_name'];
-        
-        if ($tmp_foto != "") {
-            move_uploaded_file($tmp_foto, "../../images/peluditos/" . $nombre_foto);
+        $destination_path = "../../../images/peluditos/" . $nombre_foto;
+
+        // Move the uploaded file
+        if (!move_uploaded_file($tmp_foto, $destination_path)) {
+            error_log("Failed to move uploaded file.");
+            // Handle the error accordingly
+        }
+    } else {
+        if (isset($_FILES['foto'])) {
+            error_log("Error uploading file: " . $_FILES['foto']['error']);
+        } else {
+            error_log("No file uploaded under 'foto'.");
         }
     }
-
+    // Bind parameters and execute the SQL statement
     $sentencia->bindParam(":titulo", $titulo);
     $sentencia->bindParam(":descripcion", $descripcion);
     $sentencia->bindParam(":linkfacebook", $linkfacebook);
     $sentencia->bindParam(":linkinstagram", $linkinstagram);
     $sentencia->bindParam(":linktwitter", $linktwitter);
     $sentencia->bindParam(":foto", $nombre_foto);
-    $sentencia->execute();
-}      
+
+    if (!$sentencia->execute()) {
+        error_log('Database insert failed: ' . implode(":", $sentencia->errorInfo()));
+    }
+}  
 
 include("../../templates/header.php");
 ?>
